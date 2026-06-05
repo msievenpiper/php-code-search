@@ -36,13 +36,13 @@ jobs:
       - name: Install dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction
 
-      - name: Execute tests (PHP 8.4 - full suite with snapshots)
+      - name: Execute tests (PHP 8.4 -  unit suite only)
         if: matrix.php == '8.4'
-        run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
+        run: ./vendor/bin/phpunit --testsuite Unit
 
-      - name: Execute tests (older PHP - unit suite only)
+      - name: Execute tests (older PHP - full suite with snapshots)
         if: matrix.php != '8.4'
-        run: ./vendor/bin/phpunit --no-coverage --testsuite Unit
+        run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
